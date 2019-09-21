@@ -8,6 +8,7 @@ print("Opened database successfully!",conn1,conn2)
 
 cur1 = conn1.cursor()
 cur1.execute("SELECT table_name FROM tables WHERE table_schema = 'quantity_test' AND table_type LIKE '%table%' AND table_name = 'template'")
+
 cur2 = conn2.cursor()
 
 if not cur1.fetchone():
