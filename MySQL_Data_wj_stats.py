@@ -6,7 +6,6 @@ from datetime import datetime
 
 conn = pymysql.connect(host='localhost', port=3307, user='root', passwd='123456', db='dbg80', charset='utf8')
 print("Opened database successfully!",conn)
-
 cur = conn.cursor()
 
 fake = Faker(locale='zh_CN')
