@@ -20,7 +20,7 @@ def getData(line):
     return data
 
 # 生成num个节点c级关系
-def getData2(num,c):
+def getData2 (num,c):
     list = [(1,)]
     n = 1
     ready = 1
@@ -66,7 +66,7 @@ def insert_by_mysql(table):
         conn.rollback()
     cur.close()
     conn.close()
-    return(Exception)
+    return Exception
 
 def main():
     # table = getData(50)
@@ -74,15 +74,15 @@ def main():
     rank = int(input('请指定生成层级数：'))
     table = getData2(number, rank)
     trigger1 = input('是否写入数据库[Y/N]：')
-    while(trigger1.lower() == 'n'):
+    while trigger1.lower() == 'n':
         trigger2 = input('是否重新生成数据[Y/N]：')
-        if(trigger2.lower() == 'y'):
+        if trigger2.lower() == 'y':
             table = getData2(number, rank)
             trigger1 = input('是否写入数据库[Y/N]：')
         else:
             break
-    if(trigger1.lower() =='y'):
-        if(insert_by_mysql(table)):
+    if trigger1.lower() == 'y':
+        if insert_by_mysql(table):
             print('写入失败！')
         else:
             print('写入成功！')
