@@ -1,6 +1,7 @@
-import pymongo
 import os
 from flask import json
+import pymongo
+
 
 # 向集合中插入多条记录
 def insert_by_mongo(jsondata):
@@ -16,6 +17,7 @@ def insert_by_mongo(jsondata):
         print(e)
     conn.close()
 
+
 # 向集合中插入一条记录
 def insert_by_mongo_one(jsondata):
     conn = pymongo.MongoClient('localhost', 27017)
@@ -30,6 +32,7 @@ def insert_by_mongo_one(jsondata):
     except Exception as e:
         print(e)
     conn.close()
+
 
 # 文件数据源，单个json
 def load_data_file(path):
@@ -52,6 +55,7 @@ def load_data_file(path):
     fh.close()
     return jsonlist
 
+
 # 目录数据源，单个json，return [{},{},...,{}]
 def load_data_filelist(filelist):
     jsonlist = []
@@ -60,7 +64,7 @@ def load_data_filelist(filelist):
             fh = open(file, encoding='utf-8')
             data = fh.read()
             jsondata = json.loads(data)
-            newjson = json_txt(jsondata)    # 处理key中包含的'.'
+            newjson = json_txt(jsondata)  # 处理key中包含的'.'
             jsonlist.append(newjson)
             fh.close()
         except Exception as e:
@@ -68,11 +72,12 @@ def load_data_filelist(filelist):
         continue
     return jsonlist
 
-#**************************************************************************************
+# ####################################################################################
 # 工具函数：
 # 1. loopFile()
 # 2. json_txt()
-#**************************************************************************************
+# ####################################################################################
+
 
 # 递归目录，遍历目录下的json文件 return [Str,Str,...,Str]
 def loopFile(rootdir):
@@ -84,6 +89,7 @@ def loopFile(rootdir):
         for dir in dirs:
             loopFile(dir)
     return filelist
+
 
 # 遍历key，处理_替换.  return {}
 def json_txt(dic_json):
@@ -97,15 +103,23 @@ def json_txt(dic_json):
                 json_txt(dic_json[key])
     return dic_json
 
+
 def main():
     # path = 'I:\\Saved\\New3\\ES_Doc70m.json'
     # data = load_data_file(path)
     # insert_by_mongo(data)
 
-    dir_path = 'C:\\Program Files (x86)\\Adobe\\Adobe Creative Cloud\\CCXProcess\\js\\node_modules\\pngjs\\coverage'
+    # dir_path = 'C:\\Program Files (x86)\\Microsoft SDKs\\TypeScript' +30
+    # dir_path = 'C:\\Program Files (x86)\\Microsoft Office\\Updates\\Download\\PackageFiles\\AD41FC96-7427-4AAB-AA21-D2A35CCE4978\\root\\Office16' +21
+    # dir_path = 'C:\\Users\\XLY_LR\\.atom\\packages\\atom-beautify\\node_modules\\htmlparser2' +41
+    # dir_path = 'C:\\Users\\XLY_LR\\.atom\\packages\\atom-beautify\\node_modules\\htmlparser2\\test\\Events' +31
+    # dir_path = 'C:\\Users\\XLY_LR\\AppData\\Roaming\\DingTalk\\config\\FastConfig' +461
+    dir_path = 'D:\\DingTalkAppData\\DingTalk\\config\\gray_sdk'    # +282
     json_filelist = loopFile(dir_path)
+    print(json_filelist)
     jsondata = load_data_filelist(json_filelist)
     print(jsondata[0])
+    print(len(jsondata))
     # insert_by_mongo(jsondata)
     # insert_by_mongo_one(jsondata[0])
 
